@@ -1,0 +1,57 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LevelUpSystem : MonoBehaviour {
+    public GameObject[] nextPlayer;
+    public float force = 800f;
+    private float time = 0f;
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        time += Time.deltaTime;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        // アイテムを取得
+        if (col.gameObject.tag == "LevelUpItem" )
+        {
+            GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager.LEVEL += 1;
+            int level = gameManager.LEVEL;
+            if(level >= 9)
+            {
+                gameManager.LEVEL -= 1;
+            }
+            else
+            {
+                Instantiate(nextPlayer[level], this.transform.position, Quaternion.identity);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.VelocityChange);
+                Destroy(col.gameObject);
+                Destroy(this.gameObject);
+            }
+        }
+        // アイテムを取得
+        if (col.gameObject.tag == "gimmick" && time >= 3.0f)
+        {
+            GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager.LEVEL -= 1;
+            int level = gameManager.LEVEL;
+            if (level <= -1)
+            {
+                gameManager.LEVEL += 1;
+            }
+            else
+            {
+                Instantiate(nextPlayer[level], this.transform.position, Quaternion.identity);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().AddForce(Vector3.up * force);
+                Destroy(this.gameObject);
+            }
+        }
+    }
+}

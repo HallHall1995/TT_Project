@@ -1,0 +1,161 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class player : MonoBehaviour {
+
+    public int TransformPoint;
+    private Rigidbody rb;               //物理用
+
+    public float force = 30f;
+    public float gravity = 30f;
+    public float jump_force = 40.0f;
+
+    float AccelerationSpd = 10.0f;
+    //Vector2 pos;                        // 現在の位置
+    float startPosX;                    // タッチした時のプレイヤーの座標
+    float touchPosX;                    // タッチした時のカーソルの座標
+    float targetPosX;                   // 目標移動地点
+    float cameraZ;                      // カメラとの距離
+    float moveY;                        // Y軸移動量
+
+    bool onGround;                      // 接地フラグ
+
+    static public GameObject StartPoint;
+    public GameObject InitStartPoint;
+
+    void Start ()
+    {
+        rb = GetComponent<Rigidbody>();
+
+        cameraZ = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<playerFollow>().offset.z;
+        //targetPosX = vPos.x = transform.position.x;
+        //vPos.y = transform.position.y;
+        onGround = false;
+
+        if(StartPoint == null)
+        {
+            StartPoint = InitStartPoint;
+        }
+
+        else
+        {
+            transform.position = new Vector3(StartPoint.transform.position.x,5.085f,StartPoint.transform.position.z);
+        }
+    }
+
+	void FixedUpdate()
+    {
+        rb.AddForce(Vector3.down * gravity);
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddForce(Vector3.forward * force);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.AddForce(Vector3.right * force);
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            rb.AddForce(Vector3.back * force);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.AddForce(Vector3.left * force);
+        }
+        
+        
+        if (onGround)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SetJumpMove();
+            }
+        }
+      
+            
+       // }
+
+        //transform.position = new Vector3(0.0f, vPos.y, 0.0f);
+        /*
+        if (GameManager.GetMode() == GameManager.Mode.START)
+        {
+            if (!onGround)
+            {
+                moveY -= gravity;
+                pos.y = transform.position.y + (moveY);
+            }
+            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+            return;
+        }
+
+        if ( GameManager.GetMode() != GameManager.Mode.GAME ) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraZ);
+            touchPosX = Camera.main.ScreenToWorldPoint(mousePos).x;
+            startPosX = pos.x;
+        }
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraZ);
+            targetPosX = Camera.main.ScreenToWorldPoint(mousePos).x;
+        }
+        //if (Input.GetMouseButton(0))
+        //{
+        //    Vector3 mousePos = new Vector3( Input.mousePosition.x, Input.mousePosition.y, cameraZ); 
+        //    targetPosX = Camera.main.ScreenToWorldPoint(mousePos).x;
+        //}
+        if (!onGround)
+        {
+            moveY -= gravity;
+        }
+        //pos.x += (targetPosX - pos.x) * (widthMove);
+        pos.y = transform.position.y + (moveY);
+        //transform.position = new Vector3(pos.x, pos.y, transform.position.z - (move));
+        pos.x += ((startPosX + ((targetPosX - touchPosX) * widthMove)) - pos.x) * 0.1f;
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z - (move));
+        */
+    }
+
+    /// <summary>
+    /// プレイヤにジャンプ量を設定する関数onGround
+    /// </summary>
+    public void SetJumpMove()
+    {
+        onGround = false;
+        rb.AddForce(Vector3.up * jump_force);
+    }
+
+    public void SetAccelerate()
+    {
+        //rb.MovePosition(transform.position + transform.forward * Time.deltaTime);
+        rb.AddForce(Vector3.back * force * AccelerationSpd);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        onGround = true;
+        moveY = 0.0f;
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        onGround = true;
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        onGround = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "CheckPoint")
+        {
+            //チェックポイントの更新
+            StartPoint = other.gameObject;
+            Debug.Log("当たってる");
+        }
+    }
+}

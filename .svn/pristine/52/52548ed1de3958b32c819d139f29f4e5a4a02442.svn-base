@@ -1,0 +1,33 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class Dead : MonoBehaviour {
+
+    public GameObject Level1Player;
+    public GameObject StartPoint;
+    public GameObject PlayerLife;
+
+    void OnTriggerEnter(Collider target)
+    {
+        //if (target.tag != "Player") return;
+
+        // 状態変更
+
+        if(target.tag == "Player")
+        {
+            Destroy(target.gameObject);
+
+            PlayerLifeManager Plm = PlayerLife.GetComponent<PlayerLifeManager>();
+            int life = Plm.DamageReturnInt();
+            if (life <= 0)
+            {
+                return;
+            }
+
+            Vector3 pos = new Vector3(StartPoint.transform.position.x, 5.085f, StartPoint.transform.position.z);
+            GameObject player = Instantiate(Level1Player, pos, Quaternion.identity);
+
+            player.transform.parent = null;
+        }
+    }
+}

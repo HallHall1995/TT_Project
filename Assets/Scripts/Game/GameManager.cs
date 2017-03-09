@@ -1,0 +1,119 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour {
+
+    private static Mode mode;
+    public GameObject Result;
+    public GameObject Push;
+    public int LEVEL = 0;   //レベル
+
+    static public bool bGameover = false;
+
+    // 状態
+    public enum Mode
+    {
+        START = 0,  // ゲーム開始時からクリックされるまで
+        GAME,        
+        PAUSE,      // ポーズ
+        RESULT,     // ゴールまたはゲームオーバー時
+        MAX,         // 最大値
+    }
+
+    void Start()
+    {
+        bGameover = false;
+        mode = Mode.START;
+        Fader.instance.BlackIn();
+        SoundManager.LoadBgm("GameBGM", "Cry_Of_Night" );
+        SoundManager.PlayBgm("GameBGM");
+
+		SoundManager.LoadSe("GameSE_Break", "Balloon-Pop01-3");
+		SoundManager.LoadSe("GameSE_Hammer", "sen_ge_punch_jabu08");
+
+		SoundManager.LoadSe("Decision", "Decide");
+	}
+
+	void Update()
+    {
+        UpdateMode();
+    }
+
+    public void NextScene()
+    {
+		//シーン遷移
+		SoundManager.PlaySe("Decision");
+		Fader.instance.BlackOut(1.5f);
+        StartCoroutine(DelayMethod(1.5f, "Title"));
+    }
+
+    public static void SetMode(Mode nextMode)
+    {
+        mode = nextMode;
+    }
+
+    public static Mode GetMode()
+    {
+        return mode;
+    }
+
+    private void StartMode()
+    {
+        switch (mode)
+        {
+            case Mode.START:
+                break;
+
+            case Mode.GAME:
+
+                break;
+
+            case Mode.PAUSE:
+
+                break;
+
+            case Mode.RESULT:
+
+                break;
+        }
+    }
+
+    private void UpdateMode()
+    {
+        switch (mode)
+        {
+            case Mode.START:
+                if (Input.GetMouseButton(0))
+                {
+                    SetMode(Mode.GAME);
+                }
+                break;
+
+            case Mode.GAME:
+
+                break;
+
+            case Mode.PAUSE:
+
+                break;
+
+            case Mode.RESULT:
+                if (Result.activeSelf) return;
+                Result.SetActive(true);
+                Push.SetActive(true);
+                //Result.GetComponent<Result>().Begin();
+                break;
+        }
+    }
+
+    // ----------------------------------------------------------------------
+    // [ Delay(Sleep:処理をわざと遅らせる)処理 ]
+    // ----------------------------------------------------------------------
+    private IEnumerator DelayMethod(float waitTime, string Scene)
+    {
+        yield return new WaitForSeconds(waitTime);  // waitTime後に実行する
+        SoundManager.StopBgm();
+        SceneManager.LoadScene(Scene.ToString());   // シーン切り替え
+    }
+}

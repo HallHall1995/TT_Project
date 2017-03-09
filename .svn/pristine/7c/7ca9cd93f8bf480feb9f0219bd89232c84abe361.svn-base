@@ -1,0 +1,15 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class playerFollow : MonoBehaviour {
+
+   // public Transform target;
+    public Vector3 offset;
+	
+	void Update ()
+    {
+        //if (target == null) return;
+        var player = GameObject.FindGameObjectWithTag("Player");
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + offset.y, player.transform.position.z + offset.z);
+	}
+}

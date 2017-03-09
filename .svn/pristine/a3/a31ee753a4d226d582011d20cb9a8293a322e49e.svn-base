@@ -1,0 +1,56 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class hunmer02Motion : MonoBehaviour {
+
+    public Animator anim;
+    private int animCnt;
+    public float targetDistance;
+    public float distance;
+
+    Transform cameraTransform;
+
+    // Use this for initialization
+    void Start () {
+        animCnt = 0;
+        distance = 5000.0f;
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+    }
+
+    // Update is called once per frame
+    void Update () {
+        //if(Input.GetKeyDown(KeyCode.C))
+        //{
+        //    if( animCnt == 0 )
+        //    {
+        //        animCnt = 1;
+        //    }
+        //    else if( animCnt != 2 )
+        //    {
+        //        animCnt = 1;
+        //    }
+        //}
+        distance = transform.position.z - cameraTransform.position.z;
+        distance = Mathf.Abs( distance );
+        if( distance < targetDistance )
+        {
+            animCnt = 1;
+        }
+        anim.SetInteger( "hunmer02Swing" , animCnt );
+        if (cameraTransform.position.z < transform.position.z)
+        {
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
+        }
+    }
+    void OnCollisionEnter( Collision other )
+    {
+        Debug.Log( "あたり！" );
+		SoundManager.PlaySe("GameSE_Break");
+		if ( other.gameObject.CompareTag( "Player" ) )
+        {
+			GameManager.SetMode( GameManager.Mode.RESULT);
+            Destroy(other.gameObject);
+        }
+    }
+}

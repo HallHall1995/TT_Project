@@ -1,0 +1,40 @@
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class ClearUI : MonoBehaviour
+{
+
+    public Text ClearTxt;
+    private bool Finish;
+
+	void Start ()
+    {
+        SoundManager.LoadBgm("Clear", "_n_clear_music");
+        ClearTxt.text = "";
+        Finish = false;
+    }
+
+    void Update()
+    {
+        if (Finish)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                SoundManager.StopBgm();
+                SceneManager.LoadScene("Title"); 
+            }
+        }
+    }
+
+    public void SpawnClearUI()
+    {
+        SoundManager.StopBgm();
+        SoundManager.PlayBgm("Clear");
+        Finish = true;
+
+        string str = "GAME CLEAR";
+        ClearTxt.text = str;
+    }
+}

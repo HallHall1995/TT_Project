@@ -1,0 +1,14 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class Dead : MonoBehaviour {
+
+    void OnTriggerEnter(Collider target)
+    {
+        if (target.tag != "Player") return;
+
+        // 状態変更
+        GameManager.SetMode(GameManager.Mode.RESULT);
+        Destroy(target.gameObject);
+    }
+}

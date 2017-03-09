@@ -1,0 +1,31 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LevelUpSystem : MonoBehaviour {
+    public GameObject[] nextPlayer;
+    public string itemTagName;
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        // アイテムを取得
+        if (col.gameObject.tag == itemTagName)
+        {
+            GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager.LEVEL += 1;
+            int level = gameManager.LEVEL;
+
+            Instantiate(nextPlayer[level],this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+            Destroy(col.gameObject);
+        }
+    }
+}

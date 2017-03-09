@@ -1,0 +1,40 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Timer : MonoBehaviour {
+
+    public Text timer;
+    public int InitTime;
+    private int NowTime;
+    private int fps;
+    private float CntTimer;
+
+	// Use this for initialization
+	void Start () {
+        NowTime = InitTime;
+        fps = 1;
+        CntTimer = 0;
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        CntTimer += Time.deltaTime;
+        Debug.Log(CntTimer);
+        if(CntTimer >= fps)
+        {
+            NowTime--;
+            CntTimer = 0;
+        }
+
+        timer.text = NowTime.ToString();
+
+    }
+
+    public void Restart()
+    {
+        NowTime = InitTime;
+        CntTimer = 0;
+    }
+}

@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{6B5A7015-C4B8-1F0D-A40A-89E054956CE1}") = "CapcomGameJam2016", "Assembly-CSharp-firstpass.csproj", "{F33699CE-1F5F-5256-7FC1-BD6AC8478786}"
+EndProject
+Project("{6B5A7015-C4B8-1F0D-A40A-89E054956CE1}") = "CapcomGameJam2016", "Assembly-CSharp.csproj", "{5DED1CC0-F064-DF66-167E-CF38CEC65BDC}"
+EndProject
+Project("{6B5A7015-C4B8-1F0D-A40A-89E054956CE1}") = "CapcomGameJam2016", "Assembly-CSharp-Editor.csproj", "{51F55E67-35CD-8D2F-2D7B-A5B1D1EB5BC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F33699CE-1F5F-5256-7FC1-BD6AC8478786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F33699CE-1F5F-5256-7FC1-BD6AC8478786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F33699CE-1F5F-5256-7FC1-BD6AC8478786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F33699CE-1F5F-5256-7FC1-BD6AC8478786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DED1CC0-F064-DF66-167E-CF38CEC65BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DED1CC0-F064-DF66-167E-CF38CEC65BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DED1CC0-F064-DF66-167E-CF38CEC65BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DED1CC0-F064-DF66-167E-CF38CEC65BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F55E67-35CD-8D2F-2D7B-A5B1D1EB5BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F55E67-35CD-8D2F-2D7B-A5B1D1EB5BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F55E67-35CD-8D2F-2D7B-A5B1D1EB5BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F55E67-35CD-8D2F-2D7B-A5B1D1EB5BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
